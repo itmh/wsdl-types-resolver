@@ -15,10 +15,10 @@ class ResolverTest extends PHPUnit_Framework_TestCase
      */
     public function testResultIsArray()
     {
-        $types = [];
-        $signature = '';
-        $resolver = new Resolver($types);
-        $actual = $resolver->resolve($signature);
+        $client = new SoapClient(__DIR__ . '/data/ArmPlatform.wsdl');
+
+        $resolver = new Resolver($client->__getFunctions(), $client->__getTypes());
+        $actual = $resolver->resolve('DocumentFileGet');
 
         self::assertTrue(is_array($actual), 'Result is not an array');
     }

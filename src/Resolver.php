@@ -8,19 +8,28 @@ namespace ITMH;
 class Resolver
 {
     /**
+     * Коллекция функций
+     *
+     * @var string[]
+     */
+    private $functions;
+
+    /**
      * Коллекция типов
      *
-     * @var array
+     * @var string[]
      */
     private $types;
 
     /**
      * Конструктор
      *
-     * @param array $types Коллекция типов
+     * @param string[] $functions Коллекция функций
+     * @param string[] $types     Коллекция типов
      */
-    public function __construct(array $types)
+    public function __construct(array $functions, array $types)
     {
+        $this->functions = $functions;
         $this->types = $types;
     }
 
