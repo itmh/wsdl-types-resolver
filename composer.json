@@ -1,0 +1,27 @@
+{
+  "name": "itmh/wsdl-types-resolver",
+  "description": "WSDL types resolver",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Chshanovskiy Maxim",
+      "email": "chshanovskiy.maxim@itmh.ru"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "ITMH\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^5.6 || ^7.0"
+  },
+  "require-dev": {
+    "ext-xdebug": "^2.4",
+    "phpunit/phpunit": "^5.3"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit"
+  }
+}
