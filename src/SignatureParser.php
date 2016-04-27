@@ -27,9 +27,9 @@ class SignatureParser
     {
         preg_match(self::SIGNATURE_PATTERN, $signature, $matches);
 
-        $name = $this->parseName($matches);
-        $requestTypes = $this->parseRequestTypes($matches);
-        $responseType = $this->parseResponseType($matches);
+        $name = $this->parseName($matches[2]);
+        $requestTypes = $this->parseRequestTypes($matches[3]);
+        $responseType = $this->parseResponseType($matches[1]);
 
         return new Signature($name, $requestTypes, $responseType);
     }
@@ -37,26 +37,26 @@ class SignatureParser
     /**
      * Возвращает имя функции
      *
-     * @param array $matches Результаты разбора
+     * @param array $match Результат разбора
      *
      * @return string
      */
-    private function parseName($matches)
+    private function parseName($match)
     {
-        return $matches[2];
+        return trim($match);
     }
 
     /**
      * Возвращает коллекцию типов аргументов
      *
-     * @param array $matches Результаты разбора
+     * @param array $match Результат разбора
      *
      * @return array
      */
-    private function parseRequestTypes($matches)
+    private function parseRequestTypes($match)
     {
         return array_reduce(
-            $matches[3] ? explode(',', $matches[3]) : [],
+            $match ? explode(',', $match) : [],
             function ($carry, $item) {
                 $arg = explode(' ', trim($item));
                 $carry[ltrim($arg[1], '$')] = $arg[0];
@@ -70,12 +70,12 @@ class SignatureParser
     /**
      * Возвращает тип результата
      *
-     * @param array $matches Результаты разбора
+     * @param array $match Результат разбора
      *
      * @return string
      */
-    private function parseResponseType($matches)
+    private function parseResponseType($match)
     {
-        return $matches[1];
+        return trim($match);
     }
 }
