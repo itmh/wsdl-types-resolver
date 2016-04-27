@@ -27,8 +27,35 @@ class SignatureParser
     {
         preg_match(self::SIGNATURE_PATTERN, $signature, $matches);
 
-        $name = $matches[2];
-        $requestTypes = array_reduce(
+        $name = $this->parseName($matches);
+        $requestTypes = $this->parseRequestTypes($matches);
+        $responseType = $this->parseResponseType($matches);
+
+        return new Signature($name, $requestTypes, $responseType);
+    }
+
+    /**
+     * Возвращает имя функции
+     *
+     * @param array $matches Результаты разбора
+     *
+     * @return string
+     */
+    private function parseName($matches)
+    {
+        return $matches[2];
+    }
+
+    /**
+     * Возвращает коллекцию типов аргументов
+     *
+     * @param array $matches Результаты разбора
+     *
+     * @return array
+     */
+    private function parseRequestTypes($matches)
+    {
+        return array_reduce(
             $matches[3] ? explode(',', $matches[3]) : [],
             function ($carry, $item) {
                 $arg = explode(' ', trim($item));
@@ -38,8 +65,17 @@ class SignatureParser
             },
             []
         );
-        $responseType = $matches[1];
+    }
 
-        return new Signature($name, $requestTypes, $responseType);
+    /**
+     * Возвращает тип результата
+     *
+     * @param array $matches Результаты разбора
+     *
+     * @return string
+     */
+    private function parseResponseType($matches)
+    {
+        return $matches[1];
     }
 }
