@@ -45,9 +45,9 @@ class TypeParser
                 $carry[$matches[1][0]] = array_reduce(
                     explode(';', trim($matches[2][0])),
                     function ($carry, $item) {
-                        $type = explode(' ', $item);
+                        $type = explode(' ', trim($item));
                         if (count($type) === 2) {
-                            $carry[$type[0]] = $type[1];
+                            $carry[$type[1]] = $type[0];
                         }
 
                         return $carry;

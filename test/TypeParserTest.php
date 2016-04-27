@@ -46,7 +46,23 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
   DemandStateType DemandState;
 }'
                 ],
-                ['ArrayOfDemandState' => ['DemandStateType' => 'DemandState']]
+                ['ArrayOfDemandState' => ['DemandState' => 'DemandStateType']]
+            ],
+            'struct with few field' => [
+                [
+                    'struct ArrayOfDemandState {
+  DemandStateType DemandState;
+  array RoleList;
+  mixed fooBar;
+}'
+                ],
+                [
+                    'ArrayOfDemandState' => [
+                        'DemandState' => 'DemandStateType',
+                        'RoleList'    => 'array',
+                        'fooBar'      => 'mixed'
+                    ]
+                ]
             ]
         ];
     }
