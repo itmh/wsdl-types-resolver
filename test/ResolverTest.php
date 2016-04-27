@@ -1,4 +1,5 @@
 <?php
+
 use ITMH\Resolver;
 
 /**
@@ -21,7 +22,9 @@ class ResolverTest extends PHPUnit_Framework_TestCase
         $actual = $resolver->resolve('DocumentFileGet');
         $expected = [
             'request'  => [
-                'paper_version' => 'int'
+                'DocumentFileGet' => [
+                    'paper_version' => 'int'
+                ]
             ],
             'response' => [
                 'DocumentFileGetResponse' => [
