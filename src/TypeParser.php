@@ -41,8 +41,19 @@ class TypeParser
                     return $carry;
                 }
 
-                preg_match_all('/struct (\w+)/m', $item, $matches);
-                $carry[$matches[1][0]] = [];
+                preg_match_all('/struct (\w+) \{(.*)\}/s', $item, $matches);
+                $carry[$matches[1][0]] = array_reduce(
+                    explode(';', trim($matches[2][0])),
+                    function ($carry, $item) {
+                        $type = explode(' ', $item);
+                        if (count($type) === 2) {
+                            $carry[$type[0]] = $type[1];
+                        }
+
+                        return $carry;
+                    },
+                    []
+                );
 
                 return $carry;
             },

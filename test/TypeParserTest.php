@@ -43,10 +43,10 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
             'struct with one field' => [
                 [
                     'struct ArrayOfDemandState {
-  DemandState DemandState;
+  DemandStateType DemandState;
 }'
                 ],
-                ['ArrayOfDemandState' => ['DemandState' => 'DemandState']]
+                ['ArrayOfDemandState' => ['DemandStateType' => 'DemandState']]
             ]
         ];
     }
