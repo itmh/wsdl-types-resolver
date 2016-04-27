@@ -35,9 +35,8 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
         return [
             'struct without fields' => [
                 [
-                    'struct RoleList {
-}',
-                    ''
+                    'struct RoleList { 
+}'
                 ],
                 ['RoleList' => []]
             ]

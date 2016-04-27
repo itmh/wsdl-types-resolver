@@ -34,6 +34,20 @@ class TypeParser
      */
     private function parse(array $types)
     {
+        $this->types = array_reduce($types,
+            function ($carry, $item) {
+                $item = trim($item);
+                if (strpos($item, 'struct') !== 0) {
+                    return $carry;
+                }
+
+                preg_match_all('/struct (\w+)/m', $item, $matches);
+                $carry[$matches[1][0]] = [];
+
+                return $carry;
+            },
+            []
+        );
     }
 
     /**
