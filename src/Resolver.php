@@ -8,29 +8,20 @@ namespace ITMH;
 class Resolver
 {
     /**
-     * Коллекция функций
+     * Определение WSDL
      *
-     * @var string[]
+     * @var Definition
      */
-    private $functions;
-
-    /**
-     * Коллекция типов
-     *
-     * @var string[]
-     */
-    private $types;
+    private $definition;
 
     /**
      * Конструктор
      *
-     * @param string[] $functions Коллекция функций
-     * @param string[] $types     Коллекция типов
+     * @param Definition $definition Определение WSDL
      */
-    public function __construct(array $functions, array $types)
+    public function __construct(Definition $definition)
     {
-        $this->functions = $functions;
-        $this->types = $types;
+        $this->definition = $definition;
     }
 
     /**
@@ -42,5 +33,6 @@ class Resolver
      */
     public function resolve($signature)
     {
+
     }
 }

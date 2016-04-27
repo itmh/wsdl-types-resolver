@@ -1,5 +1,6 @@
 <?php
 
+use ITMH\Definition;
 use ITMH\Resolver;
 
 /**
@@ -10,15 +11,17 @@ class ResolverTest extends PHPUnit_Framework_TestCase
     /**
      * Test
      *
-     * @see \ITMH\Resolver::resolve
-     *
      * @return void
+     *
+     * @see \ITMH\Resolver::resolve
      */
     public function testResultIsArray()
     {
         $client = new SoapClient(__DIR__ . '/data/ArmPlatform.wsdl');
 
-        $resolver = new Resolver($client->__getFunctions(), $client->__getTypes());
+        $definition = new Definition($client->__getFunctions(), $client->__getTypes());
+        $resolver = new Resolver($definition);
+
         $actual = $resolver->resolve('DocumentFileGet');
         $expected = [
             'request'  => [
