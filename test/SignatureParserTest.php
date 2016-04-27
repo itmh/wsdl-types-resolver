@@ -24,7 +24,7 @@ class SignatureParserTest extends PHPUnit_Framework_TestCase
         $parser = new SignatureParser($signature);
         $actual = $parser->parse($signature);
 
-        self::assertSame($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -35,7 +35,7 @@ class SignatureParserTest extends PHPUnit_Framework_TestCase
     public function providerParse()
     {
         return [
-            'parse simple signature without arguments' => [
+            'simple signature without arguments' => [
                 'string foobar()',
                 new Signature('foobar', [], 'string')
             ]

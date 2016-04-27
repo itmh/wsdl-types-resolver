@@ -7,21 +7,13 @@ namespace ITMH;
  */
 class SignatureParser
 {
-    /**
-     * Сигнатура функции
-     *
-     * @var string
-     */
-    private $signature;
+    const SIGNATURE_PATTERN = '/(\w+) (\w+)\((.*)\)/';
 
     /**
      * Конструктор
-     *
-     * @param string $signature Сигнатура функции
      */
-    public function __construct($signature)
+    public function __construct()
     {
-        $this->signature = $signature;
     }
 
     /**
@@ -33,6 +25,12 @@ class SignatureParser
      */
     public function parse($signature)
     {
-        
+        preg_match(self::SIGNATURE_PATTERN, $signature, $matches);
+
+        $name = $matches[2];
+        $requestTypes = $matches[3] ? explode(',', $matches[3]) : [];
+        $responseType = $matches[1];
+
+        return new Signature($name, $requestTypes, $responseType);
     }
 }

@@ -15,13 +15,22 @@ class Resolver
     private $definition;
 
     /**
+     * Парсер сигнатуры
+     *
+     * @var SignatureParser
+     */
+    private $parser;
+
+    /**
      * Конструктор
      *
-     * @param Definition $definition Определение WSDL
+     * @param Definition      $definition Определение WSDL
+     * @param SignatureParser $parser     Парсер сигнатуры
      */
-    public function __construct(Definition $definition)
+    public function __construct(Definition $definition, SignatureParser $parser)
     {
         $this->definition = $definition;
+        $this->parser = $parser;
     }
 
     /**
@@ -33,6 +42,6 @@ class Resolver
      */
     public function resolve($signature)
     {
-
+        $this->parser->parse($signature);
     }
 }
