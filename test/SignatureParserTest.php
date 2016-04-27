@@ -35,9 +35,17 @@ class SignatureParserTest extends PHPUnit_Framework_TestCase
     public function providerParse()
     {
         return [
-            'simple signature without arguments' => [
+            'without arguments'  => [
                 'string foobar()',
                 new Signature('foobar', [], 'string')
+            ],
+            'with one argument'  => [
+                'mixed foobaz(int $input)',
+                new Signature('foobaz', ['input' => 'int'], 'mixed')
+            ],
+            'with few arguments' => [
+                'ComplexTypeResponse foobaz(int $input, ComplexType $payload)',
+                new Signature('foobaz', ['input' => 'int', 'payload' => 'ComplexType'], 'ComplexTypeResponse')
             ]
         ];
     }

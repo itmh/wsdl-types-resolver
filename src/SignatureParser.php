@@ -28,7 +28,16 @@ class SignatureParser
         preg_match(self::SIGNATURE_PATTERN, $signature, $matches);
 
         $name = $matches[2];
-        $requestTypes = $matches[3] ? explode(',', $matches[3]) : [];
+        $requestTypes = array_reduce(
+            $matches[3] ? explode(',', $matches[3]) : [],
+            function ($carry, $item) {
+                $arg = explode(' ', trim($item));
+                $carry[ltrim($arg[1], '$')] = $arg[0];
+
+                return $carry;
+            },
+            []
+        );
         $responseType = $matches[1];
 
         return new Signature($name, $requestTypes, $responseType);
