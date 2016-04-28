@@ -43,16 +43,20 @@ class ResolverTest extends PHPUnit_Framework_TestCase
 
         $expected = [
             'arguments' => [
-                'DocumentFileGet' => [
-                    'paper_version' => 'int'
+                [
+                    'DocumentFileGet' => [
+                        'paper_version' => 'int'
+                    ]
                 ]
             ],
             'result'    => [
                 'DocumentFileGetResponse' => [
                     'DocumentFileGetResult' => [
-                        'Name' => 'string',
-                        'Type' => 'string',
-                        'Data' => 'base64Binary'
+                        'PaperFile' => [
+                            'Name' => 'string',
+                            'Type' => 'string',
+                            'Data' => 'base64Binary'
+                        ]
                     ]
                 ]
             ]

@@ -10,6 +10,20 @@ use InvalidArgumentException;
 class Resolver
 {
     /**
+     * Коллекция скалярных типов, не требующих разрешения
+     *
+     * @var array
+     */
+    private static $scalars = [
+        'int',
+        'long',
+        'string',
+        'boolean',
+        'dateTime',
+        'base64Binary'
+    ];
+
+    /**
      * Коллекция разобранных сигнатур функций
      *
      * @var array
@@ -50,33 +64,28 @@ class Resolver
         }
 
         $signature = $this->functions[$function];
-        $arguments = $this->resolveTypes($signature['arguments']);
-        $result = $this->resolveTypes([$signature['result']]);
 
-        return ['arguments' => $arguments, 'result' => $result];
+        $resolve = ['arguments' => [], 'result' => []];
+        foreach ($signature['arguments'] as $type) {
+            $resolve['arguments'][] = $this->resolveType($type);
+        }
+        $resolve['result'] = $this->resolveType($signature['result']);
+
+        return $resolve;
     }
 
-    /**
-     * Возвращает дерево типов
-     *
-     * @param array $types Коллекция типов
-     *
-     * @return array
-     */
-    private function resolveTypes(array $types)
+    private function resolveType($type)
     {
-        return array_reduce($types, static::resolveTypeCallback(), []);
-    }
+        if (in_array($type, self::$scalars, true)) {
+            return $type;
+        }
 
-    /**
-     * Возвращает функцию разрешения типа
-     *
-     * @return \Closure
-     */
-    private static function resolveTypeCallback()
-    {
-        return function ($carry, $item) {
-            return $carry;
-        };
+        $self = $this;
+        $types = $this->types[$type];
+        array_walk($types, function (&$item) use ($self) {
+            $item = $self->resolveType($item);
+        });
+
+        return [$type => $types];
     }
 }
