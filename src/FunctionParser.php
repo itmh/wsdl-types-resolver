@@ -80,6 +80,8 @@ class FunctionParser
     }
 
     /**
+     * Возвращает функцию разбора аргумента
+     *
      * @return \Closure
      */
     private static function parseArgumentsCallback()
