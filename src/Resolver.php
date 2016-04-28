@@ -79,27 +79,17 @@ class Resolver
         ];
     }
 
-    /**
-     * Возвращает рекурсивно разрешённый тип
-     *
-     * @param string $type Название типа
-     *
-     * @return array
-     */
     private function resolveType($type)
     {
         if (in_array($type, self::$scalars, true)) {
             return $type;
         }
 
-        $types = $this->types[$type];
-        array_walk(
-            $types,
-            function (&$item) {
-                $item = $this->resolveType($item);
-            }
-        );
+        $resolve = [];
+        foreach ($this->types[$type] as $field => $type) {
+            $resolve[$field] = $this->resolveType($type);
+        }
 
-        return [$type => $types];
+        return $resolve;
     }
 }

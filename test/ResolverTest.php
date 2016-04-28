@@ -42,27 +42,16 @@ class ResolverTest extends PHPUnit_Framework_TestCase
         $actual = $resolver->resolve('DocumentFileGet');
 
         $expected = [
-            'arguments' => [
-                [
-                    'DocumentFileGet' => [
-                        'paper_version' => 'int'
-                    ]
-                ]
-            ],
+            'arguments' => [['paper_version' => 'int']],
             'result'    => [
-                'DocumentFileGetResponse' => [
-                    'DocumentFileGetResult' => [
-                        'PaperFile' => [
-                            'Name' => 'string',
-                            'Type' => 'string',
-                            'Data' => 'base64Binary'
-                        ]
-                    ]
+                'DocumentFileGetResult' => [
+                    'Name' => 'string',
+                    'Type' => 'string',
+                    'Data' => 'base64Binary'
                 ]
             ]
         ];
 
-        self::assertTrue(is_array($actual), 'Result is not an array');
         self::assertSame($expected, $actual);
     }
 
