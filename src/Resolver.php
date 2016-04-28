@@ -2,48 +2,51 @@
 
 namespace ITMH;
 
+use InvalidArgumentException;
+
 /**
  * Класс для разрешения типов WSDL
  */
 class Resolver
 {
     /**
-     * Определение WSDL
+     * Коллекция разобранных сигнатур функций
      *
-     * @var Definition
+     * @var array
      */
-    private $definition;
+    private $functions;
 
     /**
-     * Парсер сигнатуры
+     * Коллекция разобранных структур типов
      *
-     * @var SignatureParser
+     * @var array
      */
-    private $signatureParser;
+    private $types;
 
     /**
      * Конструктор
      *
-     * @param Definition      $definition      Определение WSDL
-     * @param SignatureParser $signatureParser Парсер сигнатуры
+     * @param array $functions Коллекция разобранных сигнатур функций
+     * @param array $types     Коллекция разобранных структур типов
      */
-    public function __construct(
-        Definition $definition,
-        SignatureParser $signatureParser
-    ) {
-        $this->definition = $definition;
-        $this->signatureParser = $signatureParser;
+    public function __construct(array $functions, array $types)
+    {
+        $this->functions = $functions;
+        $this->types = $types;
     }
 
     /**
-     * Возвращает коллекцию типов метода
+     * Возвращает разобранное представление типов функции
      *
-     * @param string $signature Сигнатура метода
+     * @param string $function Название функции
      *
      * @return array
+     * @throws InvalidArgumentException
      */
-    public function resolve($signature)
+    public function resolve($function)
     {
-        $this->signatureParser->parse($signature);
+        if (false === array_key_exists($function, $this->functions)) {
+            throw new InvalidArgumentException;
+        }
     }
 }

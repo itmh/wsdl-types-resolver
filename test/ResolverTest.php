@@ -1,13 +1,31 @@
 <?php
 
 use ITMH\Definition;
+use ITMH\FunctionParser;
 use ITMH\Resolver;
+use ITMH\TypeParser;
 
 /**
  * Тест для класса Resolver
  */
 class ResolverTest extends PHPUnit_Framework_TestCase
 {
+    private static $resolverFunctions = [];
+    private static $resolverTypes = [];
+
+    /**
+     * Настраивает окружение
+     *
+     * @return void
+     */
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+
+        self::$resolverFunctions = include __DIR__ . '/fixtures/functions.php';
+        self::$resolverTypes = include __DIR__ . '/fixtures/types.php';
+    }
+
     /**
      * Test
      *
@@ -17,12 +35,12 @@ class ResolverTest extends PHPUnit_Framework_TestCase
      */
     public function testResultIsArray()
     {
-        $client = new SoapClient(__DIR__ . '/data/ArmPlatform.wsdl');
-
-        $definition = new Definition($client->__getFunctions(), $client->__getTypes());
-        $resolver = new Resolver($definition);
-
+        $resolver = new Resolver(
+            (new FunctionParser(self::$resolverFunctions))->getFunctions(),
+            (new TypeParser(self::$resolverTypes))->getTypes()
+        );
         $actual = $resolver->resolve('DocumentFileGet');
+
         $expected = [
             'request'  => [
                 'DocumentFileGet' => [

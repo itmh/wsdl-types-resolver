@@ -48,7 +48,7 @@ class TypeParser
     {
         $this->types = array_reduce(
             $types,
-            TypeParser::parseStructCallback(),
+            static::parseTypeCallback(),
             []
         );
     }
@@ -58,19 +58,19 @@ class TypeParser
      *
      * @return \Closure
      */
-    private static function parseStructCallback()
+    private static function parseTypeCallback()
     {
         return function ($carry, $item) {
             $item = trim($item);
-            if (strpos($item, TypeParser::STRUCT_MARK) !== 0) {
+            if (strpos($item, static::STRUCT_MARK) !== 0) {
                 return $carry;
             }
 
-            preg_match_all(TypeParser::STRUCT_PATTERN, $item, $matches);
+            preg_match_all(static::STRUCT_PATTERN, $item, $matches);
             $fields = explode(';', trim($matches[2][0]));
             $carry[$matches[1][0]] = array_reduce(
                 $fields,
-                TypeParser::parseFieldCallback(),
+                static::parseFieldCallback(),
                 []
             );
 

@@ -9,8 +9,8 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
     /**
      * Test
      *
-     * @param string $types    Коллекция строковых представлений типов
-     * @param array  $expected Коллекция структур типов
+     * @param string $types    Коллекция структур типов
+     * @param array  $expected Коллекция разобранных структур типов
      *
      * @return void
      *
