@@ -65,15 +65,27 @@ class Resolver
 
         $signature = $this->functions[$function];
 
-        $resolve = ['arguments' => [], 'result' => []];
-        foreach ($signature['arguments'] as $type) {
-            $resolve['arguments'][] = $this->resolveType($type);
-        }
-        $resolve['result'] = $this->resolveType($signature['result']);
+        return [
+            'arguments' => array_reduce(
+                $signature['arguments'],
+                function ($carry, $item) {
+                    $carry[] = $this->resolveType($item);
 
-        return $resolve;
+                    return $carry;
+                },
+                []
+            ),
+            'result'    => $this->resolveType($signature['result'])
+        ];
     }
 
+    /**
+     * Возвращает рекурсивно разрешённый тип
+     *
+     * @param string $type Название типа
+     *
+     * @return array
+     */
     private function resolveType($type)
     {
         if (in_array($type, self::$scalars, true)) {
@@ -82,9 +94,12 @@ class Resolver
 
         $self = $this;
         $types = $this->types[$type];
-        array_walk($types, function (&$item) use ($self) {
-            $item = $self->resolveType($item);
-        });
+        array_walk(
+            $types,
+            function (&$item) use ($self) {
+                $item = $self->resolveType($item);
+            }
+        );
 
         return [$type => $types];
     }
