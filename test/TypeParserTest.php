@@ -33,14 +33,14 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
     public function providerParse()
     {
         return [
-            'struct without fields' => [
+            'no fields' => [
                 [
                     'struct RoleList { 
 }'
                 ],
                 ['RoleList' => []]
             ],
-            'struct with one field' => [
+            'one field' => [
                 [
                     'struct ArrayOfDemandState {
   DemandStateType DemandState;
@@ -48,7 +48,7 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
                 ],
                 ['ArrayOfDemandState' => ['DemandState' => 'DemandStateType']]
             ],
-            'struct with few field' => [
+            'few field' => [
                 [
                     'struct ArrayOfDemandState {
   DemandStateType DemandState;

@@ -7,8 +7,11 @@ namespace ITMH;
  */
 class TypeParser
 {
+    const STRUCT_MARK = 'struct';
+    const STRUCT_PATTERN = '/struct (\w+) \{(.*)\}/s';
+
     /**
-     * Коллекция типов
+     * Коллекция разобранных структур типов
      *
      * @var array
      */
@@ -17,48 +20,11 @@ class TypeParser
     /**
      * Конструктор
      *
-     * @param array $types Коллекция типов
+     * @param array $types Коллекция структур типов
      */
     public function __construct(array $types)
     {
         $this->parse($types);
-    }
-
-
-    /**
-     * Разбирает строковые представления типов в коллекцию структур типов
-     *
-     * @param array $types Коллекция строковых представлений типов
-     *
-     * @return array
-     */
-    private function parse(array $types)
-    {
-        $this->types = array_reduce($types,
-            function ($carry, $item) {
-                $item = trim($item);
-                if (strpos($item, 'struct') !== 0) {
-                    return $carry;
-                }
-
-                preg_match_all('/struct (\w+) \{(.*)\}/s', $item, $matches);
-                $carry[$matches[1][0]] = array_reduce(
-                    explode(';', trim($matches[2][0])),
-                    function ($carry, $item) {
-                        $type = explode(' ', trim($item));
-                        if (count($type) === 2) {
-                            $carry[$type[1]] = $type[0];
-                        }
-
-                        return $carry;
-                    },
-                    []
-                );
-
-                return $carry;
-            },
-            []
-        );
     }
 
     /**
@@ -69,5 +35,63 @@ class TypeParser
     public function getTypes()
     {
         return $this->types;
+    }
+
+    /**
+     * Разбирает строковые представления типов в коллекцию структур типов
+     *
+     * @param array $types Коллекция строковых представлений типов
+     *
+     * @return array
+     */
+    private function parse(array $types)
+    {
+        $this->types = array_reduce(
+            $types,
+            TypeParser::parseStructCallback(),
+            []
+        );
+    }
+
+    /**
+     * Возвращает функцию для разбора типа
+     *
+     * @return \Closure
+     */
+    private static function parseStructCallback()
+    {
+        return function ($carry, $item) {
+            $item = trim($item);
+            if (strpos($item, TypeParser::STRUCT_MARK) !== 0) {
+                return $carry;
+            }
+
+            preg_match_all(TypeParser::STRUCT_PATTERN, $item, $matches);
+            $fields = explode(';', trim($matches[2][0]));
+            $carry[$matches[1][0]] = array_reduce(
+                $fields,
+                TypeParser::parseFieldCallback(),
+                []
+            );
+
+            return $carry;
+        };
+    }
+
+    /**
+     * Возвращает функцию для разбора поля структуры
+     *
+     * @return \Closure
+     */
+    private static function parseFieldCallback()
+    {
+        return function ($carry, $item) {
+            $type = explode(' ', trim($item));
+            if (count($type) === 2) {
+                $carry[$type[1]] = $type[0];
+            }
+
+            return $carry;
+        };
     }
 }
