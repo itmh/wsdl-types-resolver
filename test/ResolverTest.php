@@ -65,4 +65,23 @@ class ResolverTest extends PHPUnit_Framework_TestCase
         self::assertTrue(is_array($actual), 'Result is not an array');
         self::assertSame($expected, $actual);
     }
+
+    /**
+     * Test
+     *
+     * @return void
+     *
+     * @see \ITMH\Resolver::resolve
+     */
+    public function testException()
+    {
+        $resolver = new Resolver([], []);
+
+        try {
+            $resolver->resolve('DocumentFileGet');
+            self::fail('Exception is not thrown');
+        } catch (InvalidArgumentException $e) {
+            $this->addToAssertionCount(1);
+        }
+    }
 }
