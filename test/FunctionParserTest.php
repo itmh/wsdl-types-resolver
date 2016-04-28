@@ -8,7 +8,7 @@ use ITMH\FunctionParser;
 class SignatureParserTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Test
+     * Тест
      *
      * @param string $functions Коллекция сигнатур функций
      * @param array  $expected  Коллекция разобранных сигнатур функции
@@ -27,7 +27,7 @@ class SignatureParserTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Provider
+     * Провайдер
      *
      * @return array
      */

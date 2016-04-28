@@ -7,7 +7,7 @@ use ITMH\TypeParser;
 class TypeParserTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Test
+     * Тест
      *
      * @param string $types    Коллекция структур типов
      * @param array  $expected Коллекция разобранных структур типов
@@ -26,7 +26,7 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Provider
+     * Провайдер
      *
      * @return array
      */

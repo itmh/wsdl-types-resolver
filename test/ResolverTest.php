@@ -26,37 +26,75 @@ class ResolverTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test
+     * Тест
+     *
+     * @param string $function Имя функции
+     * @param array  $expected Ожидаемый результат
      *
      * @return void
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
-     * @see \ITMH\Resolver::resolve
+     * @see          \ITMH\Resolver::resolve
+     * @dataProvider providerResolve
      */
-    public function testResolve()
+    public function testResolve($function, $expected)
     {
         $resolver = new Resolver(
             (new FunctionParser(self::$resolverFunctions))->getFunctions(),
             (new TypeParser(self::$resolverTypes))->getTypes()
         );
-        $actual = $resolver->resolve('DocumentFileGet');
-
-        $expected = [
-            'arguments' => [['paper_version' => 'int']],
-            'result'    => [
-                'DocumentFileGetResult' => [
-                    'Name' => 'string',
-                    'Type' => 'string',
-                    'Data' => 'base64Binary'
-                ]
-            ]
-        ];
+        $actual = $resolver->resolve($function);
 
         self::assertSame($expected, $actual);
     }
 
     /**
-     * Test
+     * Провайдер
+     *
+     * @return array
+     */
+    public function providerResolve()
+    {
+        return [
+            'resolve arguments' => [
+                'DocumentCreate',
+                [
+                    'arguments' => [
+                        [
+                            'demand'      => 'int',
+                            'document_dt' => 'dateTime',
+                            'mem'         => 'string',
+                            'file'        => [
+                                'Name' => 'string',
+                                'Type' => 'string',
+                                'Data' => 'base64Binary'
+                            ],
+                            'manager_api' => 'int'
+                        ]
+                    ],
+                    'result'    => [
+                        'DocumentCreateResult' => 'int'
+                    ]
+                ]
+            ],
+            'resolve result'    => [
+                'DocumentFileGet',
+                [
+                    'arguments' => [['paper_version' => 'int']],
+                    'result'    => [
+                        'DocumentFileGetResult' => [
+                            'Name' => 'string',
+                            'Type' => 'string',
+                            'Data' => 'base64Binary'
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * Тест
      *
      * @return void
      *
