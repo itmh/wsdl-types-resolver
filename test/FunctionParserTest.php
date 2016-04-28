@@ -1,7 +1,6 @@
 <?php
 
 use ITMH\FunctionParser;
-use ITMH\Signature;
 
 /**
  * Тест для классв SignatureParser

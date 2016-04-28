@@ -1,6 +1,5 @@
 <?php
 
-use ITMH\Definition;
 use ITMH\FunctionParser;
 use ITMH\Resolver;
 use ITMH\TypeParser;
@@ -30,10 +29,11 @@ class ResolverTest extends PHPUnit_Framework_TestCase
      * Test
      *
      * @return void
+     * @throws \InvalidArgumentException
      *
      * @see \ITMH\Resolver::resolve
      */
-    public function testResultIsArray()
+    public function testResolve()
     {
         $resolver = new Resolver(
             (new FunctionParser(self::$resolverFunctions))->getFunctions(),

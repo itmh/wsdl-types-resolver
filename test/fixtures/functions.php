@@ -94,5 +94,5 @@ return [
     90 => 'PingResponse Ping(Ping $parameters)',
     91 => 'GetUsedDBResponse GetUsedDB(GetUsedDB $parameters)',
     92 => 'PingDatabaseResponse PingDatabase(PingDatabase $parameters)',
-    93 => 'BuildInfoGetResponse BuildInfoGet(BuildInfoGet $parameters)',
+    93 => 'BuildInfoGetResponse BuildInfoGet(BuildInfoGet $parameters)'
 ];

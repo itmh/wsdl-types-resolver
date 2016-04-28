@@ -79,6 +79,13 @@ class Resolver
         ];
     }
 
+    /**
+     * Возвращает ркурсивно разрешенную структуру типа
+     *
+     * @param string $type Название типа
+     *
+     * @return array
+     */
     private function resolveType($type)
     {
         if (in_array($type, self::$scalars, true)) {
@@ -86,9 +93,12 @@ class Resolver
         }
 
         $resolve = [];
-        foreach ($this->types[$type] as $field => $type) {
-            $resolve[$field] = $this->resolveType($type);
-        }
+        array_walk_recursive(
+            $this->types[$type],
+            function ($item, $key) use (&$resolve) {
+                $resolve[$key] = $this->resolveType($item);
+            }
+        );
 
         return $resolve;
     }
