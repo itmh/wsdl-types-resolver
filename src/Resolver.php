@@ -92,12 +92,11 @@ class Resolver
             return $type;
         }
 
-        $self = $this;
         $types = $this->types[$type];
         array_walk(
             $types,
-            function (&$item) use ($self) {
-                $item = $self->resolveType($item);
+            function (&$item) {
+                $item = $this->resolveType($item);
             }
         );
 
