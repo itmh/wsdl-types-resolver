@@ -48,5 +48,35 @@ class Resolver
         if (false === array_key_exists($function, $this->functions)) {
             throw new InvalidArgumentException;
         }
+
+        $signature = $this->functions[$function];
+        $arguments = $this->resolveTypes($signature['arguments']);
+        $result = $this->resolveTypes([$signature['result']]);
+
+        return ['arguments' => $arguments, 'result' => $result];
+    }
+
+    /**
+     * Возвращает дерево типов
+     *
+     * @param array $types Коллекция типов
+     *
+     * @return array
+     */
+    private function resolveTypes(array $types)
+    {
+        return array_reduce($types, static::resolveTypeCallback(), []);
+    }
+
+    /**
+     * Возвращает функцию разрешения типа
+     *
+     * @return \Closure
+     */
+    private static function resolveTypeCallback()
+    {
+        return function ($carry, $item) {
+            return $carry;
+        };
     }
 }

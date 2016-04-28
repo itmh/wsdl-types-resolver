@@ -42,12 +42,12 @@ class ResolverTest extends PHPUnit_Framework_TestCase
         $actual = $resolver->resolve('DocumentFileGet');
 
         $expected = [
-            'request'  => [
+            'arguments' => [
                 'DocumentFileGet' => [
                     'paper_version' => 'int'
                 ]
             ],
-            'response' => [
+            'result'    => [
                 'DocumentFileGetResponse' => [
                     'DocumentFileGetResult' => [
                         'Name' => 'string',
