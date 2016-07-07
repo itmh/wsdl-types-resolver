@@ -7,6 +7,7 @@ namespace ITMH;
  */
 class TypeParser
 {
+
     const STRUCT_MARK = 'struct';
     const STRUCT_PATTERN = '/struct (\w+) \{(.*)\}/s';
 

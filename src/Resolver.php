@@ -9,12 +9,11 @@ use InvalidArgumentException;
  */
 class Resolver
 {
+
     /**
      * Коллекция скалярных типов, не требующих разрешения
-     *
-     * @var array
      */
-    private static $scalars = [
+    const SCALARS = [
         'int',
         'long',
         'string',
@@ -36,6 +35,13 @@ class Resolver
      * @var array
      */
     private $types;
+
+    /**
+     * Коллекция отметок о разобранных типах (во избежание бесконечной рекурсии)
+     *
+     * @var array
+     */
+    private $alreadyResolved = [];
 
     /**
      * Конструктор
@@ -88,18 +94,49 @@ class Resolver
      */
     private function resolveType($type)
     {
-        if (in_array($type, self::$scalars, true)) {
+        if ($this->isResolved($type)) {
             return $type;
         }
 
-        $resolve = [];
+        $resolvedTypes = [];
         array_walk_recursive(
             $this->types[$type],
-            function ($item, $key) use (&$resolve) {
-                $resolve[$key] = $this->resolveType($item);
-            }
+            $this->resolveTypeCallback($type, $resolvedTypes)
         );
 
-        return $resolve;
+        return $resolvedTypes;
+    }
+
+    /**
+     * Возвращает факт разрешения типа
+     * Возвращает true если тип скалярный или уже помечен разрешенным
+     *
+     * @param string $type Название типа
+     *
+     * @return bool
+     */
+    private function isResolved($type)
+    {
+        $isScalar = in_array($type, self::SCALARS, true);
+        $isAlreadyResolved = array_key_exists($type, $this->alreadyResolved);
+
+        return $isScalar || $isAlreadyResolved;
+    }
+
+    /**
+     * Возвращает функцию-обработчик для рекурсивного разрешения типа
+     *
+     * @param string $type          Имя разрешаемого типа
+     * @param array  $resolvedTypes Коллекция разрешенных структур типов
+     *
+     * @return \Closure
+     */
+    private function resolveTypeCallback($type, array &$resolvedTypes)
+    {
+        return function ($fieldType, $fieldName) use ($type, &$resolvedTypes) {
+            // Добавляем тип в массив разрешенных, чтобы избежать бесконечной рекурсии
+            $this->alreadyResolved[$type] = true;
+            $resolvedTypes[$fieldName] = $this->resolveType($fieldType);
+        };
     }
 }

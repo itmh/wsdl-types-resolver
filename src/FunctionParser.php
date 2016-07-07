@@ -7,6 +7,7 @@ namespace ITMH;
  */
 class FunctionParser
 {
+
     const SIGNATURE_PATTERN = '/(\w+) (\w+)\((.*)\)/';
 
     /**

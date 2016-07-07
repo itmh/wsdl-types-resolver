@@ -19,9 +19,11 @@
   },
   "require-dev": {
     "ext-xdebug": "^2.4",
-    "phpunit/phpunit": "^5.3"
+    "itmh/php-buddy": "^1.0"
   },
   "scripts": {
-    "test": "./vendor/bin/phpunit"
+    "build": "./vendor/bin/phing build",
+    "build:strict": "BUILD_STRICT=1 ./vendor/bin/phing build",
+    "test": "./vendor/bin/phing test"
   }
 }

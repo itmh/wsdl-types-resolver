@@ -6,6 +6,7 @@ use ITMH\TypeParser;
  */
 class TypeParserTest extends PHPUnit_Framework_TestCase
 {
+
     /**
      * Тест
      *
@@ -33,41 +34,66 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
     public function providerParse()
     {
         return [
-            'no struct' => [
+            'no struct'        => [
                 [
                     'type Some { 
-}'
+}',
+                    ''
                 ],
                 []
             ],
-            'no fields' => [
+            'no fields'        => [
                 [
                     'struct RoleList { 
-}'
+}',
+                    ''
                 ],
                 ['RoleList' => []]
             ],
-            'one field' => [
+            'one field'        => [
                 [
                     'struct ArrayOfDemandState {
   DemandStateType DemandState;
-}'
+}',
+                    ''
                 ],
                 ['ArrayOfDemandState' => ['DemandState' => 'DemandStateType']]
             ],
-            'few field' => [
+            'few field'        => [
                 [
                     'struct ArrayOfDemandState {
   DemandStateType DemandState;
   array RoleList;
   mixed fooBar;
-}'
+}',
+                    ''
                 ],
                 [
                     'ArrayOfDemandState' => [
                         'DemandState' => 'DemandStateType',
                         'RoleList'    => 'array',
                         'fooBar'      => 'mixed'
+                    ]
+                ]
+            ],
+            'recursive struct' => [
+                [
+                    'struct BaseImageInfo {
+  boolean IsUsed;
+  int Count;
+  int ParentID;
+  BaseImageInfo Group;
+  Leaf ImageInfo;
+}',
+                    ''
+                ],
+                [
+                    'BaseImageInfo' => [
+                        'IsUsed'    => 'boolean',
+                        'Count'     => 'int',
+                        'ParentID'  => 'int',
+                        'Group'     => 'BaseImageInfo',
+                        'ImageInfo' => 'Leaf'
                     ]
                 ]
             ]

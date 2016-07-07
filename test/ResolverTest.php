@@ -9,7 +9,19 @@ use ITMH\TypeParser;
  */
 class ResolverTest extends PHPUnit_Framework_TestCase
 {
+
+    /**
+     * Список функций из метаданных Soap клиента
+     *
+     * @var array
+     */
     private static $resolverFunctions = [];
+
+    /**
+     * Список типов из метаданных Soap клиента
+     *
+     * @var array
+     */
     private static $resolverTypes = [];
 
     /**
@@ -21,8 +33,8 @@ class ResolverTest extends PHPUnit_Framework_TestCase
     {
         parent::setUpBeforeClass();
 
-        self::$resolverFunctions = include __DIR__ . '/fixtures/functions.php';
-        self::$resolverTypes = include __DIR__ . '/fixtures/types.php';
+        self::$resolverFunctions = include __DIR__ . '/fixtures/simple/functions.php';
+        self::$resolverTypes = include __DIR__ . '/fixtures/simple/types.php';
     }
 
     /**

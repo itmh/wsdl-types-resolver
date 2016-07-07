@@ -5,8 +5,9 @@ use ITMH\FunctionParser;
 /**
  * Тест для классв SignatureParser
  */
-class SignatureParserTest extends PHPUnit_Framework_TestCase
+class FunctionParserTest extends PHPUnit_Framework_TestCase
 {
+
     /**
      * Тест
      *
