@@ -65,6 +65,7 @@ class Resolver
      */
     public function resolve($function)
     {
+        $this->alreadyResolved = [];
         if (false === array_key_exists($function, $this->functions)) {
             throw new InvalidArgumentException;
         }

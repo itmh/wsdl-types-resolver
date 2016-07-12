@@ -61,6 +61,31 @@ class ResolverTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Тест
+     *
+     * @param string $function Имя функции
+     * @param array  $expected Ожидаемый результат
+     *
+     * @return void
+     * @throws InvalidArgumentException
+     *
+     * @see          \ITMH\Resolver::resolve
+     * @dataProvider providerResolve
+     */
+    public function testResolveDouble($function, $expected)
+    {
+        $resolver = new Resolver(
+            (new FunctionParser(self::$resolverFunctions))->getFunctions(),
+            (new TypeParser(self::$resolverTypes))->getTypes()
+        );
+        $actual1 = $resolver->resolve($function);
+        $actual2 = $resolver->resolve($function);
+
+        self::assertSame($expected, $actual1);
+        self::assertSame($expected, $actual2);
+    }
+
+    /**
      * Провайдер
      *
      * @return array
