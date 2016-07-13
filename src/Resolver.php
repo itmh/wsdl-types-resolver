@@ -14,11 +14,27 @@ class Resolver
      * Коллекция скалярных типов, не требующих разрешения
      */
     const SCALARS = [
-        'int',
-        'long',
         'string',
         'boolean',
-        'dateTime',
+        'float',
+        'double',
+        'decimal',
+        'binary',
+        'integer',
+        'nonPositiveInteger',
+        'negativeInteger',
+        'long',
+        'int',
+        'short',
+        'byte',
+        'nonNegativeInteger',
+        'unsignedLong',
+        'unsignedInt',
+        'unsignedShort',
+        'unsignedByte',
+        'positiveInteger',
+        'date',
+        'time',
         'base64Binary'
     ];
 
