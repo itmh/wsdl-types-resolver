@@ -35,6 +35,7 @@ class Resolver
         'positiveInteger',
         'date',
         'time',
+        'dateTime',
         'base64Binary'
     ];
 
