@@ -34,12 +34,15 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
     public function providerParse()
     {
         return [
-            'no struct'        => [
+            'scalar'           => [
                 [
-                    'type Some { 
-}',
+                    'string Mode',
                     ''
                 ],
+                ['Mode' => 'string']
+            ],
+            'no struct'        => [
+                [],
                 []
             ],
             'no fields'        => [

@@ -117,12 +117,16 @@ class Resolver
         }
 
         $resolvedTypes = [];
-        array_walk_recursive(
-            $this->types[$type],
-            $this->resolveTypeCallback($type, $resolvedTypes)
-        );
+        $nextType = $this->types[$type];
 
-        return $resolvedTypes;
+        if (is_array($nextType)) {
+            $resolveTypeCallback = $this->resolveTypeCallback($type, $resolvedTypes);
+            array_walk_recursive($nextType, $resolveTypeCallback);
+
+            return $resolvedTypes;
+        }
+
+        return $nextType;
     }
 
     /**

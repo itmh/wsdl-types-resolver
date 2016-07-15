@@ -10,6 +10,7 @@ class TypeParser
 
     const STRUCT_MARK = 'struct';
     const STRUCT_PATTERN = '/struct (\w+) \{(.*)\}/s';
+    const SCALAR_PATTERN = '/(\w+) (.*)/s';
 
     /**
      * Коллекция разобранных структур типов
@@ -63,20 +64,54 @@ class TypeParser
     {
         return function ($carry, $item) {
             $item = trim($item);
-            if (strpos($item, static::STRUCT_MARK) !== 0) {
-                return $carry;
-            }
 
-            preg_match_all(static::STRUCT_PATTERN, $item, $matches);
-            $fields = explode(';', trim($matches[2][0]));
-            $carry[$matches[1][0]] = array_reduce(
-                $fields,
-                static::parseFieldCallback(),
-                []
-            );
+            self::parseTypeAsStruct($item, $carry);
+            self::parseTypeAsScalar($item, $carry);
 
             return $carry;
         };
+    }
+
+    /**
+     * Разбирает тип как структуру
+     *
+     * @param string $item  Сигнатура типа
+     * @param array  $carry Коллекция разобранных сигнатур
+     *
+     * @return void
+     */
+    private static function parseTypeAsStruct($item, array &$carry)
+    {
+        if (!$item || strpos($item, static::STRUCT_MARK) !== 0) {
+            return;
+        }
+
+        preg_match_all(static::STRUCT_PATTERN, $item, $matches);
+        $fields = explode(';', trim($matches[2][0]));
+        $carry[$matches[1][0]] = array_reduce(
+            $fields,
+            static::parseFieldCallback(),
+            []
+        );
+    }
+
+    /**
+     * Разбирает тип как скалярное значение
+     *
+     * @param string $item  Сигнатура типа
+     * @param array  $carry Коллекция разобранных сигнатур
+     *
+     * @return void
+     */
+    private static function parseTypeAsScalar($item, array &$carry)
+    {
+        if (!$item || strpos($item, static::STRUCT_MARK) === 0) {
+            // Если сигнатура типа начинается с 'struct' – игнорировать
+            return;
+        }
+
+        preg_match_all(static::SCALAR_PATTERN, $item, $matches);
+        $carry[$matches[2][0]] = $matches[1][0];
     }
 
     /**
