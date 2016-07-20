@@ -54,11 +54,18 @@ class Resolver
     private $types;
 
     /**
-     * Коллекция отметок о разобранных типах (во избежание бесконечной рекурсии)
+     * Коллекция отметок о разобираемых типах (во избежание бесконечной рекурсии)
      *
      * @var array
      */
-    private $alreadyResolved = [];
+    private $inResolving = [];
+
+    /**
+     * Коллекция полностью разобранных типов
+     *
+     * @var array
+     */
+    private $fullyResolved = [];
 
     /**
      * Конструктор
@@ -82,7 +89,7 @@ class Resolver
      */
     public function resolve($function)
     {
-        $this->alreadyResolved = [];
+        $this->inResolving = [];
         if (false === array_key_exists($function, $this->functions)) {
             throw new InvalidArgumentException;
         }
@@ -99,12 +106,12 @@ class Resolver
                 },
                 []
             ),
-            'result'    => $this->resolveType($signature['result'])
+            'result' => $this->resolveType($signature['result'])
         ];
     }
 
     /**
-     * Возвращает ркурсивно разрешенную структуру типа
+     * Возвращает рекурсивно разрешенную структуру типа
      *
      * @param string $type Название типа
      *
@@ -112,53 +119,31 @@ class Resolver
      */
     private function resolveType($type)
     {
-        if ($this->isResolved($type)) {
+        // Если тип уже полностью разрешен - вернуть описание типа
+        if (array_key_exists($type, $this->fullyResolved)) {
+            return $this->fullyResolved[$type];
+        }
+
+        // Если тип в процессе разрешения (рекурсия) или скаляр - вернуть название типа
+        if (array_key_exists($type, $this->inResolving) || in_array($type, self::SCALARS, true)) {
             return $type;
         }
 
-        $resolvedTypes = [];
+        $resolveType = [];
         $nextType = $this->types[$type];
-
         if (is_array($nextType)) {
-            $resolveTypeCallback = $this->resolveTypeCallback($type, $resolvedTypes);
-            array_walk_recursive($nextType, $resolveTypeCallback);
+            array_walk_recursive(
+                $nextType,
+                function ($fieldType, $fieldName) use ($type, &$resolveType) {
+                    $this->inResolving[$type] = true;
+                    $resolveType[$fieldName] = $this->resolveType($fieldType);
+                }
+            );
+            $this->fullyResolved[$type] = $resolveType;
 
-            return $resolvedTypes;
+            return $resolveType;
         }
 
         return $nextType;
-    }
-
-    /**
-     * Возвращает факт разрешения типа
-     * Возвращает true если тип скалярный или уже помечен разрешенным
-     *
-     * @param string $type Название типа
-     *
-     * @return bool
-     */
-    private function isResolved($type)
-    {
-        $isScalar = in_array($type, self::SCALARS, true);
-        $isAlreadyResolved = array_key_exists($type, $this->alreadyResolved);
-
-        return $isScalar || $isAlreadyResolved;
-    }
-
-    /**
-     * Возвращает функцию-обработчик для рекурсивного разрешения типа
-     *
-     * @param string $type          Имя разрешаемого типа
-     * @param array  $resolvedTypes Коллекция разрешенных структур типов
-     *
-     * @return \Closure
-     */
-    private function resolveTypeCallback($type, array &$resolvedTypes)
-    {
-        return function ($fieldType, $fieldName) use ($type, &$resolvedTypes) {
-            // Добавляем тип в массив разрешенных, чтобы избежать бесконечной рекурсии
-            $this->alreadyResolved[$type] = true;
-            $resolvedTypes[$fieldName] = $this->resolveType($fieldType);
-        };
     }
 }
