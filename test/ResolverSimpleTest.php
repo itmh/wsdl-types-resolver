@@ -7,7 +7,7 @@ use ITMH\TypeParser;
 /**
  * Тест для класса Resolver
  */
-class ResolverTest extends PHPUnit_Framework_TestCase
+class ResolverSimpleTest extends PHPUnit_Framework_TestCase
 {
 
     /**
