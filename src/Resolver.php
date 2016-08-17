@@ -91,22 +91,25 @@ class Resolver
     {
         $this->inResolving = [];
         if (false === array_key_exists($function, $this->functions)) {
-            throw new InvalidArgumentException;
+            $message = sprintf('Unknown function "%s"', $function);
+            throw new InvalidArgumentException($message);
         }
 
         $signature = $this->functions[$function];
+        $arguments = array_reduce(
+            $signature['arguments'],
+            function ($carry, $item) {
+                $carry[] = $this->resolveType($item);
+
+                return $carry;
+            },
+            []
+        );
+        $result = $this->resolveType($signature['result']);
 
         return [
-            'arguments' => array_reduce(
-                $signature['arguments'],
-                function ($carry, $item) {
-                    $carry[] = $this->resolveType($item);
-
-                    return $carry;
-                },
-                []
-            ),
-            'result' => $this->resolveType($signature['result'])
+            'arguments' => $arguments,
+            'result'    => $result
         ];
     }
 
