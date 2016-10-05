@@ -5,7 +5,7 @@ namespace ITMH;
 /**
  * Класс для разбора сигнатур функций
  */
-class FunctionParser
+final class FunctionParser
 {
 
     const SIGNATURE_PATTERN = '/(\w+) (\w+)\((.*)\)/';
@@ -73,7 +73,7 @@ class FunctionParser
 
             $carry[$name] = [
                 'arguments' => $arguments,
-                'result'    => $result
+                'result' => $result
             ];
 
             return $carry;

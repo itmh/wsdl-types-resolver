@@ -1,12 +1,16 @@
 <?php
 
 use ITMH\FunctionParser;
+use Yandex\Allure\Adapter\Annotation\Features;
+use Yandex\Allure\Adapter\Annotation\Stories;
 use Yandex\Allure\Adapter\Annotation\Title;
 
 /**
- * Тест для классв SignatureParser
+ * Тест для класса SignatureParser
  *
- * @Title("Парсер сигнатур функций")
+ * @Title("Разбор сигнатур функций")
+ * @Features({"Разрешение типов"})
+ * @Stories({"Разбор сигнатур функций"})
  */
 class FunctionParserTest extends PHPUnit_Framework_TestCase
 {

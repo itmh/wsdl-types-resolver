@@ -7,7 +7,7 @@ use InvalidArgumentException;
 /**
  * Класс для разрешения типов WSDL
  */
-class Resolver
+final class Resolver
 {
 
     /**
@@ -54,7 +54,7 @@ class Resolver
     private $types;
 
     /**
-     * Коллекция отметок о разобираемых типах (во избежание бесконечной рекурсии)
+     * Коллекция отметок о разбираемых типах (во избежание бесконечной рекурсии)
      *
      * @var array
      */

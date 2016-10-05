@@ -3,12 +3,16 @@
 use ITMH\FunctionParser;
 use ITMH\Resolver;
 use ITMH\TypeParser;
+use Yandex\Allure\Adapter\Annotation\Features;
+use Yandex\Allure\Adapter\Annotation\Stories;
 use Yandex\Allure\Adapter\Annotation\Title;
 
 /**
  * Тест для класса Resolver
  *
  * @Title("Разрешение повторяющихся типов")
+ * @Features({"Разрешение типов"})
+ * @Stories({"Разрешение повторяющихся типов"})
  */
 class ResolverSameTest extends PHPUnit_Framework_TestCase
 {

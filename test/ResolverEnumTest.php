@@ -3,12 +3,16 @@
 use ITMH\FunctionParser;
 use ITMH\Resolver;
 use ITMH\TypeParser;
+use Yandex\Allure\Adapter\Annotation\Features;
+use Yandex\Allure\Adapter\Annotation\Stories;
 use Yandex\Allure\Adapter\Annotation\Title;
 
 /**
  * Тест для класса Resolver
  *
  * @Title("Разрешение типа enum")
+ * @Features({"Разрешение типов"})
+ * @Stories({"Разрешение типа enum"})
  */
 class ResolverEnumTest extends PHPUnit_Framework_TestCase
 {

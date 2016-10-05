@@ -1,11 +1,15 @@
 <?php
 use ITMH\TypeParser;
+use Yandex\Allure\Adapter\Annotation\Features;
+use Yandex\Allure\Adapter\Annotation\Stories;
 use Yandex\Allure\Adapter\Annotation\Title;
 
 /**
  * Тест для класса TypeParser
  *
- * @Title("Парсер входных и выходных параметров функций")
+ * @Title("Разбор входных и выходных параметров функций")
+ * @Features({"Разрешение типов"})
+ * @Stories({"Разбор входных и выходных параметров функций"})
  */
 class TypeParserTest extends PHPUnit_Framework_TestCase
 {

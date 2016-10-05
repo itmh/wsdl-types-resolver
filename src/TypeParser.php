@@ -5,7 +5,7 @@ namespace ITMH;
 /**
  * Класс для разбора типа
  */
-class TypeParser
+final class TypeParser
 {
 
     const STRUCT_MARK = 'struct';
@@ -75,8 +75,8 @@ class TypeParser
     /**
      * Разбирает тип как структуру
      *
-     * @param string $item  Сигнатура типа
-     * @param array  $carry Коллекция разобранных сигнатур
+     * @param string $item Сигнатура типа
+     * @param array $carry Коллекция разобранных сигнатур
      *
      * @return void
      */
@@ -98,8 +98,8 @@ class TypeParser
     /**
      * Разбирает тип как скалярное значение
      *
-     * @param string $item  Сигнатура типа
-     * @param array  $carry Коллекция разобранных сигнатур
+     * @param string $item Сигнатура типа
+     * @param array $carry Коллекция разобранных сигнатур
      *
      * @return void
      */

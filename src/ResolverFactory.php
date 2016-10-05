@@ -2,9 +2,9 @@
 namespace ITMH;
 
 /**
- * Фабрика для создания экземпляров Resolver
+ * Фабрика для создания экземпляров Resolver из экземпляра SoapClient
  */
-class ResolverFactory
+final class ResolverFactory
 {
 
     /**
@@ -19,9 +19,12 @@ class ResolverFactory
         $functions = $client->__getFunctions();
         $types = $client->__getTypes();
 
+        $functionParser = new FunctionParser($functions);
+        $typeParser = new TypeParser($types);
+
         return new Resolver(
-            (new FunctionParser($functions))->getFunctions(),
-            (new TypeParser($types))->getTypes()
+            $functionParser->getFunctions(),
+            $typeParser->getTypes()
         );
     }
 }
