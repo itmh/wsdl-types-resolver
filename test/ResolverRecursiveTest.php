@@ -3,9 +3,12 @@
 use ITMH\FunctionParser;
 use ITMH\Resolver;
 use ITMH\TypeParser;
+use Yandex\Allure\Adapter\Annotation\Title;
 
 /**
  * Тест для класса Resolver
+ *
+ * @Title("Разрешение рекурсивного вложенного типа")
  */
 class ResolverRecursiveTest extends PHPUnit_Framework_TestCase
 {
@@ -41,7 +44,7 @@ class ResolverRecursiveTest extends PHPUnit_Framework_TestCase
      * Тест
      *
      * @param string $function Имя функции
-     * @param array  $expected Ожидаемый результат
+     * @param array $expected Ожидаемый результат
      *
      * @return void
      * @throws InvalidArgumentException
@@ -74,13 +77,13 @@ class ResolverRecursiveTest extends PHPUnit_Framework_TestCase
                     'arguments' => [
                         []
                     ],
-                    'result'    => [
+                    'result' => [
                         'BaseImageTree' => [
-                            'IsUsed'   => 'boolean',
-                            'Count'    => 'int',
+                            'IsUsed' => 'boolean',
+                            'Count' => 'int',
                             'ParentID' => 'int',
-                            'Group'    => 'BaseImageInfo',
-                            'Leaf'     => [
+                            'Group' => 'BaseImageInfo',
+                            'Leaf' => [
                                 'IsUsed' => 'boolean'
                             ]
                         ]

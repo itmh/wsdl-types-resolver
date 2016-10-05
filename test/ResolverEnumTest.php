@@ -3,9 +3,12 @@
 use ITMH\FunctionParser;
 use ITMH\Resolver;
 use ITMH\TypeParser;
+use Yandex\Allure\Adapter\Annotation\Title;
 
 /**
  * Тест для класса Resolver
+ *
+ * @Title("Разрешение типа enum")
  */
 class ResolverEnumTest extends PHPUnit_Framework_TestCase
 {
@@ -41,7 +44,7 @@ class ResolverEnumTest extends PHPUnit_Framework_TestCase
      * Тест
      *
      * @param string $function Имя функции
-     * @param array  $expected Ожидаемый результат
+     * @param array $expected Ожидаемый результат
      *
      * @return void
      * @throws InvalidArgumentException
@@ -74,25 +77,25 @@ class ResolverEnumTest extends PHPUnit_Framework_TestCase
                     'arguments' => [
                         ['building_id' => 'int']
                     ],
-                    'result'    => [
+                    'result' => [
                         'BuildingAccessInfoGetResult' => [
                             'AccessInfoList' => [
                                 'AccessInfo' => [
-                                    'Id'                => 'int',
-                                    'Mode'              => 'string',
-                                    'Number'            => 'int',
-                                    'Description'       => 'string',
-                                    'FIO'               => 'string',
-                                    'Phone'             => 'string',
-                                    'Job'               => 'string',
-                                    'Email'             => 'string',
-                                    'AuthorityName'     => 'string',
+                                    'Id' => 'int',
+                                    'Mode' => 'string',
+                                    'Number' => 'int',
+                                    'Description' => 'string',
+                                    'FIO' => 'string',
+                                    'Phone' => 'string',
+                                    'Job' => 'string',
+                                    'Email' => 'string',
+                                    'AuthorityName' => 'string',
                                     'IsBuildingContact' => 'boolean'
                                 ]
                             ],
-                            'BuildingInfo'   => [
-                                'SssAddressId'              => 'int',
-                                'Problem'                   => 'string',
+                            'BuildingInfo' => [
+                                'SssAddressId' => 'int',
+                                'Problem' => 'string',
                                 'ConnectionPossibilityName' => 'string',
                                 'ConnectionPossibilityCode' => 'string'
                             ]

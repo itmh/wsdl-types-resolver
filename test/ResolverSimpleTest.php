@@ -3,9 +3,12 @@
 use ITMH\FunctionParser;
 use ITMH\Resolver;
 use ITMH\TypeParser;
+use Yandex\Allure\Adapter\Annotation\Title;
 
 /**
  * Тест для класса Resolver
+ *
+ * @Title("Разрешение простых типов")
  */
 class ResolverSimpleTest extends PHPUnit_Framework_TestCase
 {
@@ -41,7 +44,7 @@ class ResolverSimpleTest extends PHPUnit_Framework_TestCase
      * Тест
      *
      * @param string $function Имя функции
-     * @param array  $expected Ожидаемый результат
+     * @param array $expected Ожидаемый результат
      *
      * @return void
      * @throws InvalidArgumentException
@@ -64,7 +67,7 @@ class ResolverSimpleTest extends PHPUnit_Framework_TestCase
      * Тест
      *
      * @param string $function Имя функции
-     * @param array  $expected Ожидаемый результат
+     * @param array $expected Ожидаемый результат
      *
      * @return void
      * @throws InvalidArgumentException
@@ -98,10 +101,10 @@ class ResolverSimpleTest extends PHPUnit_Framework_TestCase
                 [
                     'arguments' => [
                         [
-                            'demand'      => 'int',
+                            'demand' => 'int',
                             'document_dt' => 'dateTime',
-                            'mem'         => 'string',
-                            'file'        => [
+                            'mem' => 'string',
+                            'file' => [
                                 'Name' => 'string',
                                 'Type' => 'string',
                                 'Data' => 'base64Binary'
@@ -109,16 +112,16 @@ class ResolverSimpleTest extends PHPUnit_Framework_TestCase
                             'manager_api' => 'int'
                         ]
                     ],
-                    'result'    => [
+                    'result' => [
                         'DocumentCreateResult' => 'int'
                     ]
                 ]
             ],
-            'resolve result'    => [
+            'resolve result' => [
                 'DocumentFileGet',
                 [
                     'arguments' => [['paper_version' => 'int']],
-                    'result'    => [
+                    'result' => [
                         'DocumentFileGetResult' => [
                             'Name' => 'string',
                             'Type' => 'string',

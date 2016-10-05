@@ -1,9 +1,12 @@
 <?php
 
 use ITMH\FunctionParser;
+use Yandex\Allure\Adapter\Annotation\Title;
 
 /**
  * Тест для классв SignatureParser
+ *
+ * @Title("Парсер сигнатур функций")
  */
 class FunctionParserTest extends PHPUnit_Framework_TestCase
 {
@@ -12,7 +15,7 @@ class FunctionParserTest extends PHPUnit_Framework_TestCase
      * Тест
      *
      * @param string $functions Коллекция сигнатур функций
-     * @param array  $expected  Коллекция разобранных сигнатур функции
+     * @param array $expected Коллекция разобранных сигнатур функции
      *
      * @return void
      *
@@ -35,21 +38,21 @@ class FunctionParserTest extends PHPUnit_Framework_TestCase
     public function providerParse()
     {
         return [
-            'no arguments'  => [
+            'no arguments' => [
                 ['string foobar()'],
                 [
                     'foobar' => [
                         'arguments' => [],
-                        'result'    => 'string'
+                        'result' => 'string'
                     ]
                 ]
             ],
-            'one argument'  => [
+            'one argument' => [
                 ['mixed foobaz(int $input)'],
                 [
                     'foobaz' => [
                         'arguments' => ['input' => 'int'],
-                        'result'    => 'mixed'
+                        'result' => 'mixed'
                     ]
                 ]
             ],
@@ -58,7 +61,7 @@ class FunctionParserTest extends PHPUnit_Framework_TestCase
                 [
                     'foobaw' => [
                         'arguments' => ['input' => 'int', 'payload' => 'ComplexType'],
-                        'result'    => 'ComplexTypeResponse'
+                        'result' => 'ComplexTypeResponse'
                     ]
                 ]
             ]

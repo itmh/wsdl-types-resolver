@@ -1,8 +1,11 @@
 <?php
 use ITMH\TypeParser;
+use Yandex\Allure\Adapter\Annotation\Title;
 
 /**
  * Тест для класса TypeParser
+ *
+ * @Title("Парсер входных и выходных параметров функций")
  */
 class TypeParserTest extends PHPUnit_Framework_TestCase
 {
@@ -10,8 +13,8 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
     /**
      * Тест
      *
-     * @param string $types    Коллекция структур типов
-     * @param array  $expected Коллекция разобранных структур типов
+     * @param string $types Коллекция структур типов
+     * @param array $expected Коллекция разобранных структур типов
      *
      * @return void
      *
@@ -34,18 +37,18 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
     public function providerParse()
     {
         return [
-            'scalar'           => [
+            'scalar' => [
                 [
                     'string Mode',
                     ''
                 ],
                 ['Mode' => 'string']
             ],
-            'no struct'        => [
+            'no struct' => [
                 [],
                 []
             ],
-            'no fields'        => [
+            'no fields' => [
                 [
                     'struct RoleList { 
 }',
@@ -53,7 +56,7 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
                 ],
                 ['RoleList' => []]
             ],
-            'one field'        => [
+            'one field' => [
                 [
                     'struct ArrayOfDemandState {
   DemandStateType DemandState;
@@ -62,7 +65,7 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
                 ],
                 ['ArrayOfDemandState' => ['DemandState' => 'DemandStateType']]
             ],
-            'few field'        => [
+            'few field' => [
                 [
                     'struct ArrayOfDemandState {
   DemandStateType DemandState;
@@ -74,8 +77,8 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
                 [
                     'ArrayOfDemandState' => [
                         'DemandState' => 'DemandStateType',
-                        'RoleList'    => 'array',
-                        'fooBar'      => 'mixed'
+                        'RoleList' => 'array',
+                        'fooBar' => 'mixed'
                     ]
                 ]
             ],
@@ -92,10 +95,10 @@ class TypeParserTest extends PHPUnit_Framework_TestCase
                 ],
                 [
                     'BaseImageInfo' => [
-                        'IsUsed'    => 'boolean',
-                        'Count'     => 'int',
-                        'ParentID'  => 'int',
-                        'Group'     => 'BaseImageInfo',
+                        'IsUsed' => 'boolean',
+                        'Count' => 'int',
+                        'ParentID' => 'int',
+                        'Group' => 'BaseImageInfo',
                         'ImageInfo' => 'Leaf'
                     ]
                 ]

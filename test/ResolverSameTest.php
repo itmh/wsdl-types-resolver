@@ -3,9 +3,12 @@
 use ITMH\FunctionParser;
 use ITMH\Resolver;
 use ITMH\TypeParser;
+use Yandex\Allure\Adapter\Annotation\Title;
 
 /**
  * Тест для класса Resolver
+ *
+ * @Title("Разрешение повторяющихся типов")
  */
 class ResolverSameTest extends PHPUnit_Framework_TestCase
 {
@@ -110,7 +113,7 @@ class ResolverSameTest extends PHPUnit_Framework_TestCase
      * Тест
      *
      * @param string $function Имя функции
-     * @param array  $expected Ожидаемый результат
+     * @param array $expected Ожидаемый результат
      *
      * @return void
      * @throws InvalidArgumentException
