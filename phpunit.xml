@@ -23,4 +23,14 @@
             <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
+
+    <listeners>
+        <listener class="Yandex\Allure\Adapter\AllureAdapter"
+                  file="vendor/allure-framework/allure-phpunit/src/Yandex/Allure/Adapter/AllureAdapter.php">
+            <arguments>
+                <string>build/test/allure</string> <!-- XML files output directory -->
+                <boolean>true</boolean> <!-- Whether to delete previous results on rerun -->
+            </arguments>
+        </listener>
+    </listeners>
 </phpunit>
